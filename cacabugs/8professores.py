@@ -25,9 +25,25 @@ def cadastrar_professor(nome, cpf):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS professores (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT,
+            nome TEXT NOT NULL,
             cpf TEXT UNIQUE
         )
     ''')
-    conexao.commit()
-    conexao.close()
+
+    try:
+        cursor.execute('''
+            INSERT INTO professores (nome, cpf)
+            VALUES (?, ?)
+        ''', (nome, cpf))
+
+        conexao.commit()
+        print("Professor cadastrado com sucesso!")
+
+    except sqlite3.IntegrityError:
+        print("Erro: CPF já cadastrado!")
+
+    finally:
+        conexao.close()
+
+
+cadastrar_professor("Gabriel Moya", "99999999999")

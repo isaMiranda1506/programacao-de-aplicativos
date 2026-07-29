@@ -17,7 +17,7 @@
 
     # CORREÇÃO não está salvando, porque falta o  conexao.commit()
 
-    import sqlite3
+import sqlite3
 
 def inicializar_banco():
     conexao = sqlite3.connect('sistema_escola.db')
@@ -30,5 +30,21 @@ def inicializar_banco():
     )
     ''')
 
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS series (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome_serie TEXT NOT NULL,
+        id_escola INTEGER,
+        FOREIGN KEY (id_escola) REFERENCES escolas(id)
+    )
+    ''')
+    
     conexao.commit()
     conexao.close()
+
+    print("Banco criado com sucesso!")
+
+
+inicializar_banco()
+
+

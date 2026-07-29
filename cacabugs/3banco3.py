@@ -48,3 +48,7 @@ def criar_tabelas():
         ''')
     conexao.commit()
     conexao.close()
+
+    print("Tabelas criadas com sucesso!")
+
+criar_tabelas()

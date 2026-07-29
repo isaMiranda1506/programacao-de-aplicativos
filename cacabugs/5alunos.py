@@ -47,5 +47,5 @@ def vincular_aluno_turma():
     finally:
         if conexao:
             conexao.close()
-
+vincular_aluno_turma()
 
