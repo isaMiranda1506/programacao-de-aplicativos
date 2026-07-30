@@ -22,28 +22,39 @@ def cadastrar_professor(nome, cpf):
     conexao = sqlite3.connect('sistema_escola.db')
     cursor = conexao.cursor()
 
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS professores (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            cpf TEXT UNIQUE
-        )
-    ''')
+    # Criar um drop table, para corrigir a tabela ja crada, fiz isso porque criei a primeira tabela sem o cpf, e coloqui ele na segunda vez.
+    cursor.execute("""
+    DROP TABLE IF EXISTS professores
+    """)
 
-    try:
-        cursor.execute('''
-            INSERT INTO professores (nome, cpf)
-            VALUES (?, ?)
-        ''', (nome, cpf))
+    # Cria a tabela novamente com a estrutura correta
+    cursor.execute("""
+    CREATE TABLE professores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        cpf TEXT UNIQUE NOT NULL
+    )
+    """)
 
-        conexao.commit()
-        print("Professor cadastrado com sucesso!")
+    conexao.commit()
 
-    except sqlite3.IntegrityError:
-        print("Erro: CPF já cadastrado!")
+    cursor.execute("""
+    INSERT INTO professores (nome, cpf)
+    VALUES (?, ?)
+    """, ("Gabriel Moya", "99999999999"))
 
-    finally:
-        conexao.close()
+    conexao.commit()
+
+    cursor.execute("SELECT * FROM professores")
+    professores = cursor.fetchall()
+
+    print("Lista de Professores:")
+    for professor in professores:
+        print(professor)
+
+    conexao.close()
+
+cadastrar_professor("Gabriel Moya", "99999999999")  
 
 
-cadastrar_professor("Gabriel Moya", "99999999999")
+

@@ -39,6 +39,18 @@ def criar_tabela_turmas():
     conexao.commit()
     conexao.close()
 
+def cadastrar_professores():
+    conexao = sqlite3.connect('sistema_escola.db')
+    cursor = conexao.cursor()    
+
+    cursor.execute(
+        "INSERT INTO professores(nome, id_serie) VALUES (?, ?)",
+        (nome, id_serie)
+    )
+
+    conexao.commit()
+    print("Professor cadastrado com sucesso!")
+
 def cadastrar_turma(nome, id_serie, id_prof):
     conexao = sqlite3.connect('sistema_escola.db')
     cursor = conexao.cursor()

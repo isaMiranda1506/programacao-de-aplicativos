@@ -20,7 +20,6 @@ def atualizar_nome_aluno(id_aluno, novo_nome):
     conexao = sqlite3.connect('sistema_escola.db')
     cursor = conexao.cursor()
 
-    # Atualiza apenas o aluno com o ID informado
     cursor.execute(
         "UPDATE alunos SET nome = ? WHERE id = ?",
         (novo_nome, id_aluno)
@@ -28,4 +27,6 @@ def atualizar_nome_aluno(id_aluno, novo_nome):
 
     conexao.commit()
     conexao.close()
-        
+
+atualizar_nome_aluno(1, "João Pedro")
+    
