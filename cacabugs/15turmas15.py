@@ -35,3 +35,6 @@ def criar_tabela_turma():
 
     conexao.commit()
     conexao.close()
+
+criar_tabela_turma()
+print("Tabela turmas criada com sucesso!") 

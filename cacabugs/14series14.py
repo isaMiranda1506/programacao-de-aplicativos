@@ -21,7 +21,7 @@ def cadastrar_serie_seguro(nome, id_escola):
     conexao = None
 
     try:
-        conexao = sqlite3.connect('/pasta_protegida/sistema.db')
+        conexao = sqlite3.connect("sistema_escola.db")
         cursor = conexao.cursor()
 
         cursor.execute(
@@ -30,6 +30,7 @@ def cadastrar_serie_seguro(nome, id_escola):
         )
 
         conexao.commit()
+        print("Série cadastrada com sucesso!")
 
     except sqlite3.Error as e:
         print("Erro técnico:", e)
@@ -37,3 +38,9 @@ def cadastrar_serie_seguro(nome, id_escola):
     finally:
         if conexao is not None:
             conexao.close()
+
+nome = input("Digite o nome da série: ")
+id_escola = int(input("Digite o ID da escola: "))
+
+cadastrar_serie_seguro(nome, id_escola)
+ 

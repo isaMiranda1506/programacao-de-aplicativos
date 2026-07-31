@@ -17,8 +17,16 @@
 import sqlite3
 
 def atualizar_nome_aluno(id_aluno, novo_nome):
-    conexao = sqlite3.connect('sistema_escola.db')
+    conexao = sqlite3.connect("sistema_escola.db")
     cursor = conexao.cursor()
+
+    cursor.execute('''
+    CREATE TABLE alunos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        cpf TEXT UNIQUE NOT NULL
+    )
+    ''')
 
     cursor.execute(
         "UPDATE alunos SET nome = ? WHERE id = ?",
@@ -26,7 +34,9 @@ def atualizar_nome_aluno(id_aluno, novo_nome):
     )
 
     conexao.commit()
+    print("Nome atualizado com sucesso!")
     conexao.close()
 
 atualizar_nome_aluno(1, "João Pedro")
+
     

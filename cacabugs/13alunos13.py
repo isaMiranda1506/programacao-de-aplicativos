@@ -28,3 +28,5 @@ def verificar_registros():
     print("Segundo print:", registros)
 
     conexao.close()
+
+verificar_registros()

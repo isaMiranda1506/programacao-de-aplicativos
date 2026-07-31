@@ -23,25 +23,25 @@ def cadastrar_professor(nome, cpf):
     cursor = conexao.cursor()
 
     # Criar um drop table, para corrigir a tabela ja crada, fiz isso porque criei a primeira tabela sem o cpf, e coloqui ele na segunda vez.
-    cursor.execute("""
+    cursor.execute('''
     DROP TABLE IF EXISTS professores
-    """)
+    ''')
 
     # Cria a tabela novamente com a estrutura correta
-    cursor.execute("""
+    cursor.execute('''
     CREATE TABLE professores (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         cpf TEXT UNIQUE NOT NULL
     )
-    """)
+    ''')
 
     conexao.commit()
 
-    cursor.execute("""
+    cursor.execute('''
     INSERT INTO professores (nome, cpf)
     VALUES (?, ?)
-    """, ("Gabriel Moya", "99999999999"))
+    ''', ("Gabriel Moya", "99999999999"))
 
     conexao.commit()
 

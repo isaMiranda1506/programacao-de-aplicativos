@@ -31,3 +31,7 @@ def cadastrar_lista_alunos():
 
     conexao.commit()
     conexao.close() 
+
+    print("Alunos cadastrados com sucesso!")
+
+cadastrar_lista_alunos()

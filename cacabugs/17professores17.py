@@ -21,7 +21,7 @@ def inserir_professor(nome, materia, cpf):
     conexao = None
 
     try:
-        conexao = sqlite3.connect('sistema-escola.db')
+        conexao = sqlite3.connect("sistema-escola.db")
         cursor = conexao.cursor()
 
         cursor.execute(
@@ -30,6 +30,7 @@ def inserir_professor(nome, materia, cpf):
         )
 
         conexao.commit()
+        print("Professor cadastrado com sucesso!")
 
     except sqlite3.IntegrityError:
         print("Erro: Este CPF já está cadastrado no sistema!")
@@ -40,3 +41,9 @@ def inserir_professor(nome, materia, cpf):
     finally:
         if conexao:
             conexao.close()
+
+nome = input("Nome do professor: ")
+materia = input("Matéria: ")
+cpf = input("CPF: ")
+
+inserir_professor(nome, materia, cpf)
