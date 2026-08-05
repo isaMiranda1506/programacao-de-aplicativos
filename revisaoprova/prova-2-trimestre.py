@@ -45,15 +45,20 @@ def cadastrar_medico():
     conexao = sqlite3.connect('hospital_banco.db')
     cursor = conexao.cursor()
 
+    cursor.execute('''
+        DROP TABLE IF EXISTS medicos
+    ''')
 
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS medicos (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         crm TEXT NOT NULL, 
-        id_hospital FOREING KEY hospitais
+        id_hospital INTEGER,
+        FOREIGN KEY (id_hospital) REFERENCES hospitais(id)
         )
     ''')
+    cursor.execute("PRAGMA foreign_keys =  ON;")
 
 
     try:
