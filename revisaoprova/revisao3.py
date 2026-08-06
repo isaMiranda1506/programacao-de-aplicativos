@@ -1,8 +1,10 @@
 import sqlite3
 
 def cadastrar_academia():
-    conxeao = sqlite3.connect('sistema_academia.db')
+    conexao = sqlite3.connect('sistema_academia.db')
     cursor = conexao.cursor()
+
+    
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS academias(
@@ -17,17 +19,17 @@ def cadastrar_academia():
         nome = input("Digite o nome da academia: ")
         bairro = input("Digite o bairro da academia: ")
 
-        conexao = sqlite3.connect("sistem_academia.db")
+        conexao = sqlite3.connect("sistema_academia.db")
         cursor = conexao.cursor()
         cursor.execute(
-            "INSERT INTO cinema (nome_unidade, bairro) VALUES (?, ?)",
+            "INSERT INTO academias (nome_unidade, bairro) VALUES (?, ?)",
             (nome, bairro)
         )
 
         conexao.commit()
         print("Academia cadastrado!")
 
-        except ValueError:
+    except ValueError:
         print("Erro: o ID da academia deve ser um número inteiro.")
 
     except sqlite3.Error:
@@ -37,8 +39,10 @@ def cadastrar_academia():
         if conexao:
             conexao.close()
 
+cadastrar_academia()           
+
 def cadastrar_alunos():
-    conexao = sqlite3.connect('sistema_alunos')
+    conexao = sqlite3.connect('sistema_alunos.db')
     cursor = conexao.cursor()
 
     cursor.execute('''
@@ -47,22 +51,22 @@ def cadastrar_alunos():
             nome_aluno TEXT NOT NULL,
             mensalidade INTEGER,
             id_alunos INTEGER,
-            FOREING KEY (id_alunos) REFERENCES academias(id)
+            FOREIGN KEY (id_alunos) REFERENCES academias(id)
         )
     ''')
 
     cursor.execute("PRAGMA foreign_keys =  ON;")
 
     try:
-        id = int(input("Digite o ID do aluno: "))
+        id_alunos = int(input("Digite o ID do aluno: "))
         nome = input("Digite o seu nome: ")
-        mensalidade = input("Digite a mensalidade da academia: ")
+        mensalidade = int(input("Digite a mensalidade da academia: "))
 
-        conexao = sqlite3.connect("sistem_alunos.db")
+        conexao = sqlite3.connect("sistema_alunos.db")
         cursor = conexao.cursor()
         cursor.execute(
-            "INSERT INTO cinema (nome_aluno, mensalidade, id_alunos) VALUES (?, ?, ?)",
-            (nome, mensalidade, bairro)
+            "INSERT INTO alunos (nome_aluno, mensalidade, id_alunos) VALUES (?, ?, ?)",
+            (id_alunos ,nome, mensalidade)
         )
 
         conexao.commit()
@@ -71,12 +75,12 @@ def cadastrar_alunos():
     except ValueError:
         print("Erro: o ID do aluno(a) deve ser um número inteiro.")
 
-    except sqlite3.Error:
-        print("Erro no banco de dados.")
+    except sqlite3.Error as e:
+        print("Erro no banco de dados: ", e)
 
     finally:
         if conexao:
             conexao.close()
-
+cadastrar_alunos()
     
 
