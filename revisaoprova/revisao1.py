@@ -80,8 +80,8 @@ def cadastrar_medico():
     except ValueError:
         print("Erro: o ID do médico deve ser um número inteiro.")
 
-    except sqlite3.Error:
-        print("Erro no banco de dados.")
+    except sqlite3.Error as e:
+        print("Erro no banco de dados.", e)
 
     finally:
         if conexao:
