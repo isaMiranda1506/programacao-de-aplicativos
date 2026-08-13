@@ -10,8 +10,6 @@ def verificar_situacao(media):
     return "Reprovado"
 
 
-
-
 # Testes da função calcular_media
 assert calcular_media(8, 6) == 7
 assert calcular_media(10, 10) == 10
