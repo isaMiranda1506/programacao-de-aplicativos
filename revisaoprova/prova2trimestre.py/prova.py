@@ -5,10 +5,10 @@ def sistema_fast_food():
     cursor = conexao.cursor()
     cursor.execute("PRAGMA foreign_keys = ON;")
 
-    try:
+    try:       
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS redes_fast_food (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome_franquia TEXT NOT NULL,
             faturamento_anual REAL
             )
@@ -16,7 +16,7 @@ def sistema_fast_food():
 
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS restaurantes (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             cidade_unidade TEXT NOT NULL, 
             id_rede INTEGER,
             FOREIGN KEY (id_rede) REFERENCES redes_fast_food(id)
@@ -48,6 +48,9 @@ def cadastrar_fastfood():
 
         conexao.commit()
         print("FastFood cadastrado!")
+
+    except ValueError:
+        print("Erro: o faturamento deve ser apenas números.")    
         
     except sqlite3.Error as e:
         print("Erro no banco de dados.", e)
@@ -62,12 +65,12 @@ def cadastrar_restaurante():
 
 
     try:
-        id = int(input("Digite o ID da franquia: "))
+        id_rede = int(input("Digite o ID da franquia: "))
         cidade = input("Digite a cidade/unidade do restaurante: ")
 
         cursor.execute(
             "SELECT id FROM redes_fast_food WHERE id = ?",
-            (id,)
+            (id_rede,)
         )
 
         rede = cursor.fetchone()
@@ -78,7 +81,7 @@ def cadastrar_restaurante():
 
         cursor.execute(
             "INSERT INTO restaurantes (id_rede, cidade_unidade) VALUES (?, ?)",
-            (id, cidade)
+            (id_rede, cidade)
         )
         
         conexao.commit()
@@ -168,7 +171,6 @@ def atualizar_restaurante():
         unidade = input("Digite o nome da unidade que desejea atualizar: ")
 
         cursor.execute("""
-
             UPDATE restaurantes
             SET cidade_unidade = ?
             WHERE id = ?
@@ -237,9 +239,7 @@ def menu():
     sistema_fast_food()
 
     while True:
-        try:
-            
-
+        try:            
             print("\n ---- OPÇÕES ----")
             print("1 - Cadastrar fastfood")
             print("2 - Cadastrar restaurante")
