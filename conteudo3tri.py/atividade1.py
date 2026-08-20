@@ -1,5 +1,8 @@
 def eh_par(numero):
-    return numero %2 == 0
+    if numero %2 == 0:
+        return True
+    else:
+        return False    
 
 assert eh_par(4) == True
 assert eh_par(5) == False
